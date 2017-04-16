@@ -8,6 +8,6 @@ const (
 )
 
 type Entity struct {
-	id       int
-	position Vec
+	id  int
+	pos Vec
 }

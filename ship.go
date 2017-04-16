@@ -10,8 +10,13 @@ const (
 
 type Ship struct {
 	Entity
+	target   Vec
 	rotation int
 	speed    int
 	rum      int
 	owner    int
+}
+
+func (s *Ship) Dist(o *Ship) int {
+	return s.pos.Dist(o.pos)
 }
