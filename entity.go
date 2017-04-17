@@ -9,5 +9,5 @@ const (
 
 type Entity struct {
 	id  int
-	pos Vec
+	pos Coord
 }

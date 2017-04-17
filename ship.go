@@ -10,7 +10,7 @@ const (
 
 type Ship struct {
 	Entity
-	target   Vec
+	target   Coord
 	rotation int
 	speed    int
 	rum      int
@@ -18,5 +18,5 @@ type Ship struct {
 }
 
 func (s *Ship) Dist(o *Ship) int {
-	return s.pos.Dist(o.pos)
+	return s.pos.DistanceTo(o.pos)
 }

@@ -42,7 +42,7 @@ func main() {
 			switch entityType {
 			case TypeShip:
 				ship := &Ship{
-					Entity:   Entity{id: entityId, pos: Vec{x, y}},
+					Entity:   Entity{id: entityId, pos: Coord{x, y}},
 					rotation: arg1,
 					speed:    arg2,
 					rum:      arg3,
@@ -55,19 +55,19 @@ func main() {
 				}
 			case TypeBarrel:
 				barrel := &Barrel{
-					Entity: Entity{id: entityId, pos: Vec{x, y}},
+					Entity: Entity{id: entityId, pos: Coord{x, y}},
 					rum:    arg1,
 				}
 				barrels = append(barrels, barrel)
 			case TypeMine:
 				mine := &Mine{
-					Entity: Entity{id: entityId, pos: Vec{x, y}},
+					Entity: Entity{id: entityId, pos: Coord{x, y}},
 				}
 				mines = append(mines, mine)
 			}
 		}
 
-		myTargets := make([]Vec, 0) // prevent double actions
+		myTargets := make([]Coord, 0) // prevent double actions
 		for i := 0; i < myShipCount; i++ {
 			myShip := fleet.ships[i]
 
@@ -87,7 +87,7 @@ func main() {
 			if fleet.ships[i].rum < 100 && len(barrels) > 1 { // shoot at last one
 				var nearest = barrels[0]
 				for _, barrel := range barrels {
-					if barrel.pos.Dist(myShip.pos) < nearest.pos.Dist(myShip.pos) {
+					if barrel.pos.DistanceTo(myShip.pos) < nearest.pos.DistanceTo(myShip.pos) {
 						isTarget := false // and barrel isn't already a target
 						for _, t := range myTargets {
 							if t.x == barrel.pos.x && t.y == barrel.pos.y {
@@ -107,8 +107,8 @@ func main() {
 				lastRoundFired[i] = true
 			} else {
 				// just move
-				x := rnd.Intn(Width)
-				y := rnd.Intn(Height)
+				x := rnd.Intn(MapWidth)
+				y := rnd.Intn(MapHeight)
 				actions = append(actions, fmt.Sprintf("%s %d %d\n", ActionMove, x, y))
 				lastRoundFired[i] = false
 			}

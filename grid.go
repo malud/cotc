@@ -1,8 +1,8 @@
 package main
 
 const (
-	Width  = 23
-	Height = 21
+	MapWidth  = 23
+	MapHeight = 21
 )
 
 type Grid struct {
