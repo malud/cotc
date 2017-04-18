@@ -1,9 +1,12 @@
 package main
 
 const (
-	ActionFire   = "FIRE"
-	ActionMine   = "MINE"
-	ActionMove   = "MOVE"
-	ActionSlower = "SLOWER"
-	ActionWait   = "WAIT"
+	ActionFaster    = "FASTER"
+	ActionFire      = "FIRE"
+	ActionMine      = "MINE"
+	ActionMove      = "MOVE"
+	ActionSlower    = "SLOWER"
+	ActionStarBoard = "STARBOARD"
+	ActionPort      = "PORT"
+	ActionWait      = "WAIT"
 )
