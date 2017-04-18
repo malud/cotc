@@ -23,15 +23,15 @@ type CubeCoord struct {
 }
 
 func (c Coord) Angle(targetPosition Coord) float64 {
-	dy := float64(targetPosition.y - c.y) * math.Sqrt(3) / 2
-	dx := float64(targetPosition.x - c.x) + (float64(c.y-targetPosition.y)*0.5)
+	dy := float64(targetPosition.y-c.y) * math.Sqrt(3) / 2
+	dx := float64(targetPosition.x-c.x) + (float64(c.y-targetPosition.y) * 0.5)
 	angle := -math.Atan2(dy, dx) * 3 / math.Pi
 	if angle < 0 {
 		angle += 6
 	} else if angle >= 6 {
 		angle -= 6
 	}
-	return angle
+	return math.Abs(angle)
 }
 
 func (c Coord) ToCubeCoord() CubeCoord {
