@@ -40,9 +40,7 @@ func TestState_Update(t *testing.T) {
 	}
 }
 
-func BenchmarkState_Update(b *testing.B) {
-	b.ReportAllocs()
-	b.StartTimer()
+func NewTestData() ([]*Ship, []*Mine, []*Barrel, []*Ball) {
 	src := rand.NewSource(time.Now().UnixNano())
 	rand := rand.New(src)
 	ships := make([]*Ship, 0)
@@ -75,6 +73,13 @@ func BenchmarkState_Update(b *testing.B) {
 	for i := 0; i < rand.Intn(12); i++ {
 		balls = append(balls, &Ball{Entity: Entity{pos: randCoord()}, travelTime: rand.Intn(ShipCannonRange)})
 	}
+
+	return ships, mines, barrels, balls
+}
+
+func BenchmarkState_Update(b *testing.B) {
+	b.ReportAllocs()
+	ships, mines, barrels, balls := NewTestData()
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		state := NewState(balls, mines, barrels, ships)
