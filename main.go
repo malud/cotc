@@ -27,6 +27,7 @@ func main() {
 		var entityCount int
 		fmt.Scan(&entityCount)
 
+		balls := make([]*Ball, 0)
 		barrels := make([]*Barrel, 0)
 		ships := make([]*Ship, 0)
 		mines := make([]*Mine, 0)
@@ -42,11 +43,11 @@ func main() {
 			switch entityType {
 			case TypeShip:
 				ship := &Ship{
-					Entity:   Entity{id: entityId, pos: Coord{x, y}},
-					rotation: arg1,
-					speed:    arg2,
-					rum:      arg3,
-					owner:    arg4,
+					Entity:      Entity{id: entityId, pos: Coord{x, y}},
+					orientation: arg1,
+					speed:       arg2,
+					rum:         arg3,
+					owner:       arg4,
 				}
 				ships = append(ships, ship)
 				if ship.owner == Me {
@@ -64,8 +65,17 @@ func main() {
 					Entity: Entity{id: entityId, pos: Coord{x, y}},
 				}
 				mines = append(mines, mine)
+			case TypeCannonBall:
+				ball := &Ball{
+					Entity:     Entity{id: entityId, pos: Coord{x, y}},
+					travelTime: arg1,
+				}
+				balls = append(balls, ball)
 			}
+
 		}
+
+		fleet.SortByRum()
 
 		myTargets := make([]Coord, 0) // prevent double actions
 		for i := 0; i < myShipCount; i++ {

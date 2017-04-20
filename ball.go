@@ -2,6 +2,7 @@ package main
 
 type Ball struct {
 	Entity
-	from      *Ship
-	turnsLeft int
+	from       *Ship
+	target     *Ship
+	travelTime int
 }
