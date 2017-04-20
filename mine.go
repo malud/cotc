@@ -1,6 +1,6 @@
 package main
 
-const NEAR_MINE_DAMAGE = 10
+const NearMineDamage = 10
 
 type Mine struct {
 	Entity
@@ -39,8 +39,8 @@ func (m *Mine) Explode(ships []*Ship, force bool) []Damage {
 				}
 
 				if impactPosition != nil {
-					ship.Damage(NEAR_MINE_DAMAGE)
-					damage = append(damage, Damage{*impactPosition, NEAR_MINE_DAMAGE, true})
+					ship.Damage(NearMineDamage)
+					damage = append(damage, Damage{*impactPosition, NearMineDamage, true})
 				}
 			}
 		}
