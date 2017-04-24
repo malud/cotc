@@ -11,4 +11,4 @@ const (
 	ActionWait      = "WAIT"
 )
 
-var Actions = []string{ActionFaster, ActionFire, ActionMine, ActionSlower, ActionStarBoard, ActionPort, ActionWait}
+var Actions = []string{ActionWait, ActionFaster, ActionSlower, ActionStarBoard, ActionPort, ActionFire, ActionMine}

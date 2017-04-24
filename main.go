@@ -2,9 +2,8 @@ package main
 
 import (
 	"fmt"
-	"math/rand"
 	"os"
-	"time"
+	"strings"
 )
 
 const (
@@ -17,8 +16,6 @@ func debugln(pattern string, args ...interface{}) {
 }
 
 func main() {
-	src := rand.NewSource(time.Now().UnixNano())
-	rnd := rand.New(src)
 	lastRoundFired := make([]bool, 0)
 	for {
 		var myShipCount int
@@ -31,8 +28,7 @@ func main() {
 		barrels := make([]*Barrel, 0)
 		ships := make([]*Ship, 0)
 		mines := make([]*Mine, 0)
-		actions := make([]string, 0)
-		fleet := NewFleet() // just my ships for now
+		//fleet := NewFleet() // just my ships for now
 
 		for i := 0; i < entityCount; i++ {
 			var entityId int
@@ -51,7 +47,7 @@ func main() {
 				}
 				ships = append(ships, ship)
 				if ship.owner == Me {
-					fleet.Join(ship)
+					//fleet.Join(ship)
 					lastRoundFired = append(lastRoundFired, false)
 				}
 			case TypeBarrel:
@@ -75,56 +71,9 @@ func main() {
 
 		}
 
-		fleet.SortByRum()
+		state := NewState(balls, mines, barrels, ships)
+		solution := SearchSolution(state)
 
-		myTargets := make([]Coord, 0) // prevent double actions
-		for i := 0; i < myShipCount; i++ {
-			myShip := fleet.ships[i]
-
-			if !lastRoundFired[i] {
-				for _, ship := range ships {
-					if ship.owner == Enemy && ship.speed == 0 {
-						actions = append(actions, fmt.Sprintf("%s %d %d\n", ActionFire, ship.pos.x, ship.pos.y))
-						lastRoundFired[i] = true
-						break
-					}
-				}
-				if lastRoundFired[i] {
-					continue
-				}
-			}
-
-			if fleet.ships[i].rum < 100 && len(barrels) > 1 { // shoot at last one
-				var nearest = barrels[0]
-				for _, barrel := range barrels {
-					if barrel.pos.DistanceTo(myShip.pos) < nearest.pos.DistanceTo(myShip.pos) {
-						isTarget := false // and barrel isn't already a target
-						for _, t := range myTargets {
-							if t.x == barrel.pos.x && t.y == barrel.pos.y {
-								isTarget = true
-								break
-							}
-						}
-						if !isTarget {
-							nearest = barrel
-						}
-					}
-				}
-				actions = append(actions, fmt.Sprintf("%s %d %d\n", ActionMove, nearest.pos.x, nearest.pos.y))
-				lastRoundFired[i] = false
-			} else if len(barrels) == 1 && !lastRoundFired[i] {
-				actions = append(actions, fmt.Sprintf("%s %d %d\n", ActionFire, barrels[0].pos.x, barrels[0].pos.y))
-				lastRoundFired[i] = true
-			} else {
-				// just move
-				x := rnd.Intn(MapWidth)
-				y := rnd.Intn(MapHeight)
-				actions = append(actions, fmt.Sprintf("%s %d %d\n", ActionMove, x, y))
-				lastRoundFired[i] = false
-			}
-		}
-		for _, action := range actions {
-			fmt.Print(action)
-		}
+		fmt.Printf("%s\n", strings.Join(solution.actions, "\n"))
 	}
 }

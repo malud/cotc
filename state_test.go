@@ -24,7 +24,7 @@ func TestState_Update(t *testing.T) {
 		t.Errorf("Expected to lose 1 rum per turn. Got: '%d'", updatedShip.rum)
 	}
 
-	state = state.Fork()
+	state = state.Clone()
 	state.ships[0].action = ActionPort
 	state.Update()
 	if ship.orientation == state.ships[0].orientation || state.ships[0].orientation != 1+1 {
@@ -32,7 +32,7 @@ func TestState_Update(t *testing.T) {
 	}
 
 	// forking last state - turning back to orientation 1
-	state = state.Fork()
+	state = state.Clone()
 	state.ships[0].action = ActionStarBoard
 	state.Update()
 	if ship.orientation != state.ships[0].orientation {

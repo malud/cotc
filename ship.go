@@ -211,8 +211,8 @@ func (s *Ship) RotateTo(dst Coord) string {
 	return ActionWait
 }
 
-func (s *Ship) Dist(o *Ship) int {
-	return s.pos.DistanceTo(o.pos)
+func (s *Ship) Dist(o *Ship) float64 {
+	return float64(s.pos.DistanceTo(o.pos))
 }
 
 func (s *Ship) String() string {

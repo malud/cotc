@@ -75,7 +75,7 @@ func NewState(balls []*Ball, mines []*Mine, barrels []*Barrel, ships []*Ship) *S
 	return state
 }
 
-func (s *State) Fork() *State {
+func (s *State) Clone() *State {
 	return NewState(s.cannonballs, s.mines, s.barrels, s.ships)
 }
 
