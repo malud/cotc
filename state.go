@@ -11,11 +11,6 @@ const (
 	RewardRumBarrelValue = 30
 )
 
-//private long seed;
-//private int shipsPerPlayer;
-//private int mineCount;
-//private int barrelCount;
-//private Random random;
 type State struct {
 	cannonballs []*Ball
 	mines       []*Mine
@@ -404,6 +399,10 @@ func (s *State) explodeBarrels() {
 			}
 		}
 	}
+}
+
+func (s *State) Score() float64 {
+	return 1.0 // :)
 }
 
 func min(a int, b int) int {

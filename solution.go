@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"math/rand"
 	"time"
 )
@@ -39,7 +38,7 @@ func SearchSolution(state *State) *Node {
 					}
 				}
 				n := &Node{score: score, actions: actions}
-			//solutions++
+				//solutions++
 				result <- n
 			}
 		}
@@ -58,4 +57,8 @@ func SearchSolution(state *State) *Node {
 	}
 	//debugln("Solutions: %d", solutions)
 	return best
+}
+
+func prepareClone(state *State) (score float64, actions []string) {
+	return // :)
 }
